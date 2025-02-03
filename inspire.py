@@ -378,6 +378,7 @@ if __name__ == '__main__':
             spinner.stop()
             console.print()
             console.print(syntax)
+            console.print("Test print")
         else:
             spinner = Spinner(DOTS, "fetching BibTeX for {}...".format(texkey))
             spinner.start()
