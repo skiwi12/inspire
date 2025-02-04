@@ -14,6 +14,7 @@ from rich.console import Console
 from rich.syntax import Syntax
 from rich.progress import (Progress, BarColumn, TaskProgressColumn,
                            TimeRemainingColumn, TextColumn)
+from rich.text import Text
 
 __version__ = '1.0'
 __author__ = 'Alexander Huss'
@@ -252,6 +253,10 @@ if __name__ == '__main__':
                         type=int,
                         default=config.getint('local', 'page_size'),
                         help='number of records to show per page')
+    parser.add_argument('--get-entry',
+                        type=str,
+                        
+                        )
     args = parser.parse_args()
     # console.print(args)
 
@@ -374,11 +379,18 @@ if __name__ == '__main__':
                 lexer = 'text'
             spinner = Spinner(DOTS, "fetching {} for {}...".format(key,texkey))
             spinner.start()
-            syntax = Syntax(retrieve_link(rec, key).strip(), lexer=lexer, word_wrap=True)
+            # syntax = Syntax(retrieve_link(rec, key).strip(), lexer=lexer, word_wrap=True)
+            print(retrieve_link(rec, key).strip())
             spinner.stop()
             console.print()
-            console.print(syntax)
-            console.print("Test print")
+            with console.capture() as capture:
+                console.print(syntax)
+
+            highlighted_code = capture.get()
+            print(highlighted_code)
+
+            # text = Text.from_markup(str(syntax))
+            # print(text)
         else:
             spinner = Spinner(DOTS, "fetching BibTeX for {}...".format(texkey))
             spinner.start()
